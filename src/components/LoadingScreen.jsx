@@ -50,7 +50,6 @@ export default function LoadingScreen({ onFinish }) {
       <div className="loading-screen-content">
         <div className="loading-logo-wrapper">
           <img src={logo} alt="DotGanga Logo" className="loading-logo-img" />
-          <div className="loading-logo-glow" />
         </div>
 
         <div className="loading-bar-container">

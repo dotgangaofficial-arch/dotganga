@@ -2,20 +2,18 @@
   position: fixed;
   inset: 0;
   z-index: 999999;
-  background-color: #0b0b0e;
-  background: radial-gradient(circle at 50% 50%, #15151c 0%, #09090b 100%);
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: all;
   opacity: 1;
-  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: scale(1);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .loading-screen-backdrop.loading-screen-fadeout {
   opacity: 0;
-  transform: scale(1.03);
+  visibility: hidden;
   pointer-events: none;
 }
 
@@ -24,87 +22,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  animation: loadingContentEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes loadingContentEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  gap: 22px;
 }
 
 .loading-logo-wrapper {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .loading-logo-img {
-  height: 52px;
+  height: 48px;
   width: auto;
-  max-width: 220px;
+  max-width: 200px;
   object-fit: contain;
-  position: relative;
-  z-index: 2;
-  animation: loadingLogoPulse 2s ease-in-out infinite alternate;
+  display: block;
 }
 
-@keyframes loadingLogoPulse {
-  0% {
-    filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0));
-    transform: scale(1);
-  }
-  100% {
-    filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
-    transform: scale(1.02);
-  }
-}
-
-.loading-logo-glow {
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.22) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(20px);
-}
-
-/* Red Progress Bar */
+/* Minimalist Red Progress Bar with 0 glow */
 .loading-bar-container {
-  width: 160px;
-  height: 3.5px;
-  background: rgba(255, 255, 255, 0.08);
+  width: 140px;
+  height: 3px;
+  background: #f0f0f2;
   border-radius: 999px;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .loading-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+  background: #ef4444;
   border-radius: 999px;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8), 0 0 4px rgba(248, 113, 113, 0.9);
-  transition: width 0.1s ease-out;
-  position: relative;
-}
-
-.loading-bar-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 20px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
-  border-radius: 999px;
+  transition: width 0.08s linear;
 }
