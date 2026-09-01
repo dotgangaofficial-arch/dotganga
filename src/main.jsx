@@ -7,6 +7,7 @@ import Careers from './pages/Careers.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import Terms from './pages/Terms.jsx'
 import Contact from './pages/Contact.jsx'
+import LoadingScreen from './components/LoadingScreen.jsx'
 
 function ScrollHandler() {
   const { pathname, hash } = useLocation();
@@ -56,6 +57,7 @@ function ScrollHandler() {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+      <LoadingScreen />
       <ScrollHandler />
       <Routes>
         <Route path="/" element={<App />} />
