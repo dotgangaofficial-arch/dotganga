@@ -4,9 +4,9 @@ import '../App.css';
 import './Contact.css';
 
 // Brand Assets
-import logo from '../assets/dotgangalogo.png';
-import dotSocial from '../assets/DotSocial.png';
-import digitalPren from '../assets/digialpren.PNG';
+import logo from '../assets/images/dotgangalogo.webp';
+import dotSocial from '../assets/images/dotsocial.webp';
+import digitalPren from '../assets/images/digitalpren.webp';
 import whatsappIcon from '../assets/whatsapp-svgrepo-com.svg';
 
 export default function Contact() {

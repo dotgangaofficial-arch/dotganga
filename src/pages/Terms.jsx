@@ -5,9 +5,9 @@ import './PrivacyPolicy.css'; // Reuses the exact same clean architectural layou
 import './Terms.css';
 
 // Brand Assets
-import logo from '../assets/dotgangalogo.png';
-import dotSocial from '../assets/DotSocial.png';
-import digitalPren from '../assets/digialpren.PNG';
+import logo from '../assets/images/dotgangalogo.webp';
+import dotSocial from '../assets/images/dotsocial.webp';
+import digitalPren from '../assets/images/digitalpren.webp';
 
 export default function Terms() {
   const contactEmail = 'rajaparihar@dotganga.com';

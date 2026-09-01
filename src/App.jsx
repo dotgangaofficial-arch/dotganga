@@ -1,32 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import avatar from './assets/avatar.png';
-import logo from './assets/dotgangalogo.png';
-import favicon from './assets/favicon.png';
-import clapper from './assets/img-film-clapper.png';
+import avatar from './assets/images/avatar.webp';
+import logo from './assets/images/dotgangalogo.webp';
+import favicon from './assets/images/favicon.webp';
+import clapper from './assets/images/img-film-clapper.webp';
 import { FlipWord } from './FlipClock';
-import mobileMock from './assets/mobile_mock.png';
-import bg1 from './assets/bg element/1.png';
-import bg2 from './assets/bg element/2.png';
-import bg3 from './assets/bg element/3.png';
-import bg4 from './assets/bg element/4.png';
-import dotSocial from './assets/DotSocial.png';
-import digitalPren from './assets/digialpren.PNG';
+import mobileMock from './assets/images/mobile-mock.webp';
+import bg1 from './assets/images/bg-1.webp';
+import bg2 from './assets/images/bg-2.webp';
+import bg3 from './assets/images/bg-3.webp';
+import bg4 from './assets/images/bg-4.webp';
+import dotSocial from './assets/images/dotsocial.webp';
+import digitalPren from './assets/images/digitalpren.webp';
 
 // Import Help Card Images
-import websiteImg from './assets/CARD/website.png';
-import websiteActiveImg from './assets/CARD/website-active.png';
-import personalImg from './assets/CARD/personal.png';
-import personalActiveImg from './assets/CARD/personal-active.png';
-import brandingImg from './assets/CARD/branding.png';
-import brandingActiveImg from './assets/CARD/branding-active.png';
-import performanceImg from './assets/CARD/performance.png';
-import performanceActiveImg from './assets/CARD/performance-active.png';
-import socialImg from './assets/CARD/social.png';
-import socialActiveImg from './assets/CARD/social-active.png';
-import seoImg from './assets/CARD/SEO.png';
-import seoActiveImg from './assets/CARD/SEO-active.png';
+import websiteImg from './assets/images/card-website.webp';
+import websiteActiveImg from './assets/images/card-website-active.webp';
+import personalImg from './assets/images/card-personal.webp';
+import personalActiveImg from './assets/images/card-personal-active.webp';
+import brandingImg from './assets/images/card-branding.webp';
+import brandingActiveImg from './assets/images/card-branding-active.webp';
+import performanceImg from './assets/images/card-performance.webp';
+import performanceActiveImg from './assets/images/card-performance-active.webp';
+import socialImg from './assets/images/card-social.webp';
+import socialActiveImg from './assets/images/card-social-active.webp';
+import seoImg from './assets/images/card-seo.webp';
+import seoActiveImg from './assets/images/card-seo-active.webp';
 
 // Import Video Assets for Filmstrip
 import video1 from './assets/video/video1.mp4';
@@ -58,8 +58,8 @@ import logoMayank from './assets/Dotganga Portfolio/Mayank Fashion.svg';
 import logoSMRE from './assets/Dotganga Portfolio/SMRE.svg';
 import logoProRoute from './assets/Dotganga Portfolio/ProRoute Landscape Logo Background erased 1.svg';
 import logoWithName from './assets/Dotganga Portfolio/logo-with-nametransprent-1-1 1.svg';
-// Import 12 Social Formats Showcase Items from image_grid
-const socialGridImagesObj = import.meta.glob('./assets/image_grid/*.{jpg,png,jpeg,webp,JPG,PNG,JPEG,WEBP}', { eager: true, import: 'default' });
+// Import 12 Social Formats Showcase Items from images
+const socialGridImagesObj = import.meta.glob('./assets/images/grid-*.webp', { eager: true, import: 'default' });
 const socialGridImages = Object.values(socialGridImagesObj);
 
 
