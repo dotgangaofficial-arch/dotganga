@@ -144,6 +144,9 @@ const helpOptions = [
 function App() {
   const [index, setIndex] = React.useState(0);
   const [activeVideo, setActiveVideo] = React.useState(videosList[0]);
+  const reelSectionRef = React.useRef(null);
+  const [isReelNear, setIsReelNear] = React.useState(false);
+  const [isReelVisible, setIsReelVisible] = React.useState(false);
 
   const [currentStep, setCurrentStep] = React.useState(1);
   const scrollToForm = () => {
@@ -370,7 +373,50 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
+  // Lazy load reel video sources when near viewport and track active visibility
   React.useEffect(() => {
+    const el = reelSectionRef.current;
+    if (!el) return;
+
+    // 1. Preload trigger: only load video assets when user scrolls within 600px
+    const nearObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsReelNear(true);
+          nearObserver.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    nearObserver.observe(el);
+
+    // 2. Playback & tracking trigger: only play and calculate center mockup when in view
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsReelVisible(entry.isIntersecting);
+        const videos = el.querySelectorAll('video');
+        videos.forEach((vid) => {
+          if (entry.isIntersecting) {
+            vid.play().catch(() => {});
+          } else {
+            vid.pause();
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    visibilityObserver.observe(el);
+
+    return () => {
+      nearObserver.disconnect();
+      visibilityObserver.disconnect();
+    };
+  }, []);
+
+  // Update center active video only when the reel section is actually visible
+  React.useEffect(() => {
+    if (!isReelVisible || !isReelNear) return;
+
     const updateActiveVideo = () => {
       const mockupEl = document.querySelector('.reel-phone-mockup');
       const videoEls = document.querySelectorAll('.filmstrip-track .film-frame');
@@ -394,13 +440,13 @@ function App() {
 
       const videoIndex = closestIdx % videosList.length;
       if (videosList[videoIndex]) {
-        setActiveVideo(videosList[videoIndex]);
+        setActiveVideo((prev) => (prev !== videosList[videoIndex] ? videosList[videoIndex] : prev));
       }
     };
 
-    const interval = setInterval(updateActiveVideo, 100);
+    const interval = setInterval(updateActiveVideo, 160);
     return () => clearInterval(interval);
-  }, []);
+  }, [isReelVisible, isReelNear]);
 
 
   const handleHeroMouseMove = (e) => {
@@ -419,19 +465,19 @@ function App() {
   };
 
   const partnerLogos = [
-    { name: 'Logo 6', icon: <img src={logo6} className="client-logo-svg invert-to-white" alt="Logo 6" /> },
-    { name: 'Kake Di Hatti', icon: <img src={logoKake} className="client-logo-svg" alt="Kake Di Hatti" /> },
-    { name: 'Logo 12', icon: <img src={logo12} className="client-logo-svg invert-to-white" alt="Logo 12" /> },
-    { name: 'Mayank Fashion', icon: <img src={logoMayank} className="client-logo-svg" alt="Mayank Fashion" /> },
-    { name: 'Logo 19', icon: <img src={logo19} className="client-logo-svg invert-to-white" alt="Logo 19" /> },
-    { name: 'SMRE', icon: <img src={logoSMRE} className="client-logo-svg" alt="SMRE" /> },
-    { name: 'Logo 21', icon: <img src={logo21} className="client-logo-svg invert-to-white" alt="Logo 21" /> },
-    { name: 'ProRoute', icon: <img src={logoProRoute} className="client-logo-svg" alt="ProRoute" /> },
-    { name: 'Logo 35', icon: <img src={logo35} className="client-logo-svg invert-to-white" alt="Logo 35" /> },
-    { name: 'Logo With Name', icon: <img src={logoWithName} className="client-logo-svg" alt="Logo" /> },
-    { name: 'DM Studio', icon: <img src={logoDMStudio} className="client-logo-svg invert-to-white" alt="DM Studio" /> },
-    { name: 'Mask Group 1', icon: <img src={logoMask1} className="client-logo-svg" alt="Mask Group 1" /> },
-    { name: 'Mask Group', icon: <img src={logoMask} className="client-logo-svg" alt="Mask Group" /> },
+    { name: 'Logo 6', icon: <img src={logo6} className="client-logo-svg invert-to-white" alt="Logo 6" loading="lazy" decoding="async" /> },
+    { name: 'Kake Di Hatti', icon: <img src={logoKake} className="client-logo-svg" alt="Kake Di Hatti" loading="lazy" decoding="async" /> },
+    { name: 'Logo 12', icon: <img src={logo12} className="client-logo-svg invert-to-white" alt="Logo 12" loading="lazy" decoding="async" /> },
+    { name: 'Mayank Fashion', icon: <img src={logoMayank} className="client-logo-svg" alt="Mayank Fashion" loading="lazy" decoding="async" /> },
+    { name: 'Logo 19', icon: <img src={logo19} className="client-logo-svg invert-to-white" alt="Logo 19" loading="lazy" decoding="async" /> },
+    { name: 'SMRE', icon: <img src={logoSMRE} className="client-logo-svg" alt="SMRE" loading="lazy" decoding="async" /> },
+    { name: 'Logo 21', icon: <img src={logo21} className="client-logo-svg invert-to-white" alt="Logo 21" loading="lazy" decoding="async" /> },
+    { name: 'ProRoute', icon: <img src={logoProRoute} className="client-logo-svg" alt="ProRoute" loading="lazy" decoding="async" /> },
+    { name: 'Logo 35', icon: <img src={logo35} className="client-logo-svg invert-to-white" alt="Logo 35" loading="lazy" decoding="async" /> },
+    { name: 'Logo With Name', icon: <img src={logoWithName} className="client-logo-svg" alt="Logo" loading="lazy" decoding="async" /> },
+    { name: 'DM Studio', icon: <img src={logoDMStudio} className="client-logo-svg invert-to-white" alt="DM Studio" loading="lazy" decoding="async" /> },
+    { name: 'Mask Group 1', icon: <img src={logoMask1} className="client-logo-svg" alt="Mask Group 1" loading="lazy" decoding="async" /> },
+    { name: 'Mask Group', icon: <img src={logoMask} className="client-logo-svg" alt="Mask Group" loading="lazy" decoding="async" /> },
   ];
 
   // Double the list for infinite marquee animation
@@ -716,7 +762,7 @@ function App() {
       </section>
 
       {/* Reel Section */}
-      <section className="reel-section">
+      <section className="reel-section" ref={reelSectionRef}>
         <div className="reel-container">
           <span className="reel-subtitle">Featured Work</span>
           <h2 className="reel-title">Check Our Latest Reels</h2>
@@ -729,14 +775,19 @@ function App() {
                     <div key={idx} className="film-frame">
                       <div className="film-sprocket-holes top"></div>
                       <div className="film-image-container">
-                        <video 
-                          src={vid} 
-                          className="film-frame-video" 
-                          autoPlay 
-                          loop 
-                          muted 
-                          playsInline 
-                        />
+                        {isReelNear ? (
+                          <video 
+                            src={vid} 
+                            className="film-frame-video" 
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline 
+                            preload="metadata"
+                          />
+                        ) : (
+                          <div className="film-frame-placeholder" />
+                        )}
                       </div>
                       <div className="film-sprocket-holes bottom"></div>
                     </div>
@@ -747,8 +798,8 @@ function App() {
               {/* Mobile Mockup in Front */}
               <div className="reel-phone-mockup">
                 <div className="phone-screen">
-                  <img src={mobileMock} alt="Mobile Reel Mockup" className="reel-mockup-img" />
-                  {activeVideo && (
+                  <img src={mobileMock} alt="Mobile Reel Mockup" className="reel-mockup-img" loading="lazy" decoding="async" />
+                  {isReelNear && activeVideo && (
                     <video
                       key={activeVideo}
                       src={activeVideo}
@@ -757,6 +808,7 @@ function App() {
                       loop
                       muted
                       playsInline
+                      preload="metadata"
                     />
                   )}
                 </div>
