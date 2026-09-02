@@ -28,7 +28,7 @@ import socialActiveImg from './assets/images/card-social-active.webp';
 import seoImg from './assets/images/card-seo.webp';
 import seoActiveImg from './assets/images/card-seo-active.webp';
 
-// Import Video Assets for Filmstrip
+// Import Video Assets & Posters for Filmstrip & Mockup
 import video1 from './assets/video/video1.webm';
 import video2 from './assets/video/video2.webm';
 import video3 from './assets/video/video3.webm';
@@ -39,8 +39,26 @@ import video7 from './assets/video/video7.webm';
 import video8 from './assets/video/video8.webm';
 import video9 from './assets/video/video9.webm';
 
-const videosList = [
-  video1, video2, video3, video4, video5, video6, video7, video8, video9
+import poster1 from './assets/video/poster1.webp';
+import poster2 from './assets/video/poster2.webp';
+import poster3 from './assets/video/poster3.webp';
+import poster4 from './assets/video/poster4.webp';
+import poster5 from './assets/video/poster5.webp';
+import poster6 from './assets/video/poster6.webp';
+import poster7 from './assets/video/poster7.webp';
+import poster8 from './assets/video/poster8.webp';
+import poster9 from './assets/video/poster9.webp';
+
+const reelsData = [
+  { id: 1, video: video1, poster: poster1 },
+  { id: 2, video: video2, poster: poster2 },
+  { id: 3, video: video3, poster: poster3 },
+  { id: 4, video: video4, poster: poster4 },
+  { id: 5, video: video5, poster: poster5 },
+  { id: 6, video: video6, poster: poster6 },
+  { id: 7, video: video7, poster: poster7 },
+  { id: 8, video: video8, poster: poster8 },
+  { id: 9, video: video9, poster: poster9 },
 ];
 
 
@@ -143,10 +161,10 @@ const helpOptions = [
 
 function App() {
   const [index, setIndex] = React.useState(0);
-  const [activeVideo, setActiveVideo] = React.useState(videosList[0]);
+  const [activeVideo, setActiveVideo] = React.useState(reelsData[0].video);
+  const mockupVideoRef = React.useRef(null);
+  const lastSwitchTimeRef = React.useRef(0);
   const reelSectionRef = React.useRef(null);
-  const [isReelNear, setIsReelNear] = React.useState(false);
-  const [isReelVisible, setIsReelVisible] = React.useState(false);
 
   const [currentStep, setCurrentStep] = React.useState(1);
   const scrollToForm = () => {
@@ -373,51 +391,21 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // Lazy load reel video sources when near viewport and track active visibility
+  // Play active reel video smoothly without interruption
   React.useEffect(() => {
-    const el = reelSectionRef.current;
-    if (!el) return;
+    if (mockupVideoRef.current) {
+      mockupVideoRef.current.load();
+      mockupVideoRef.current.play().catch(() => {});
+    }
+  }, [activeVideo]);
 
-    // 1. Preload trigger: only load video assets when user scrolls within 600px
-    const nearObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsReelNear(true);
-          nearObserver.disconnect();
-        }
-      },
-      { rootMargin: '600px 0px' }
-    );
-    nearObserver.observe(el);
-
-    // 2. Playback & tracking trigger: only play and calculate center mockup when in view
-    const visibilityObserver = new IntersectionObserver(
-      ([entry]) => {
-        setIsReelVisible(entry.isIntersecting);
-        const videos = el.querySelectorAll('video');
-        videos.forEach((vid) => {
-          if (entry.isIntersecting) {
-            vid.play().catch(() => {});
-          } else {
-            vid.pause();
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
-    visibilityObserver.observe(el);
-
-    return () => {
-      nearObserver.disconnect();
-      visibilityObserver.disconnect();
-    };
-  }, []);
-
-  // Update center active video only when the reel section is actually visible
+  // Center video detector: updates phone mockup smoothly with a minimum 4s dwell time per reel
   React.useEffect(() => {
-    if (!isReelVisible || !isReelNear) return;
-
     const updateActiveVideo = () => {
+      const now = Date.now();
+      // Allow current video to play for at least 4s so visitors can watch without constant restarts
+      if (now - lastSwitchTimeRef.current < 4000) return;
+
       const mockupEl = document.querySelector('.reel-phone-mockup');
       const videoEls = document.querySelectorAll('.filmstrip-track .film-frame');
       if (!mockupEl || videoEls.length === 0) return;
@@ -438,15 +426,17 @@ function App() {
         }
       });
 
-      const videoIndex = closestIdx % videosList.length;
-      if (videosList[videoIndex]) {
-        setActiveVideo((prev) => (prev !== videosList[videoIndex] ? videosList[videoIndex] : prev));
+      const videoIndex = closestIdx % reelsData.length;
+      const targetVideo = reelsData[videoIndex].video;
+      if (targetVideo && targetVideo !== activeVideo) {
+        lastSwitchTimeRef.current = now;
+        setActiveVideo(targetVideo);
       }
     };
 
-    const interval = setInterval(updateActiveVideo, 160);
+    const interval = setInterval(updateActiveVideo, 500);
     return () => clearInterval(interval);
-  }, [isReelVisible, isReelNear]);
+  }, [activeVideo]);
 
 
   const handleHeroMouseMove = (e) => {
@@ -771,23 +761,26 @@ function App() {
               {/* Filmstrip Camera Roll Background */}
               <div className="filmstrip-container">
                 <div className="filmstrip-track">
-                  {[...videosList, ...videosList].map((vid, idx) => (
-                    <div key={idx} className="film-frame">
+                  {[...reelsData, ...reelsData].map((reel, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`film-frame ${activeVideo === reel.video ? 'active-film-frame' : ''}`}
+                      onClick={() => {
+                        lastSwitchTimeRef.current = Date.now();
+                        setActiveVideo(reel.video);
+                      }}
+                      title="Click to preview this reel"
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className="film-sprocket-holes top"></div>
                       <div className="film-image-container">
-                        {isReelNear ? (
-                          <video 
-                            src={vid} 
-                            className="film-frame-video" 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline 
-                            preload="metadata"
-                          />
-                        ) : (
-                          <div className="film-frame-placeholder" />
-                        )}
+                        <img 
+                          src={reel.poster} 
+                          alt={`Reel Preview ${reel.id}`} 
+                          className="film-frame-img" 
+                          loading="lazy" 
+                          decoding="async" 
+                        />
                       </div>
                       <div className="film-sprocket-holes bottom"></div>
                     </div>
@@ -798,19 +791,17 @@ function App() {
               {/* Mobile Mockup in Front */}
               <div className="reel-phone-mockup">
                 <div className="phone-screen">
-                  <img src={mobileMock} alt="Mobile Reel Mockup" className="reel-mockup-img" loading="lazy" decoding="async" />
-                  {isReelNear && activeVideo && (
-                    <video
-                      key={activeVideo}
-                      src={activeVideo}
-                      className="mockup-video"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="metadata"
-                    />
-                  )}
+                  <img src={mobileMock} alt="Mobile Reel Mockup" className="reel-mockup-img" decoding="async" />
+                  <video
+                    ref={mockupVideoRef}
+                    src={activeVideo}
+                    className="mockup-video"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  />
                 </div>
               </div>
             </div>
