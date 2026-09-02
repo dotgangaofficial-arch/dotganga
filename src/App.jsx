@@ -38,6 +38,7 @@ import video6 from './assets/video/video6.webm';
 import video7 from './assets/video/video7.webm';
 import video8 from './assets/video/video8.webm';
 import video9 from './assets/video/video9.webm';
+import video10 from './assets/video/video10.webm';
 
 import poster1 from './assets/video/poster1.webp';
 import poster2 from './assets/video/poster2.webp';
@@ -48,6 +49,7 @@ import poster6 from './assets/video/poster6.webp';
 import poster7 from './assets/video/poster7.webp';
 import poster8 from './assets/video/poster8.webp';
 import poster9 from './assets/video/poster9.webp';
+import poster10 from './assets/video/poster10.webp';
 
 const reelsData = [
   { id: 1, video: video1, poster: poster1 },
@@ -59,6 +61,7 @@ const reelsData = [
   { id: 7, video: video7, poster: poster7 },
   { id: 8, video: video8, poster: poster8 },
   { id: 9, video: video9, poster: poster9 },
+  { id: 10, video: video10, poster: poster10 },
 ];
 
 
