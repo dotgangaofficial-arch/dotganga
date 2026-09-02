@@ -1187,7 +1187,7 @@ function App() {
 
         <div className="footer-bottom">
           <p className="copyright-text">
-            © {new Date().getFullYear()} DotGanga. All rights reserved.
+            © {new Date().getFullYear()} DotGanga. All rights reserved. • Premier Digital Marketing, Video Production & Social Media Management Agency in Jodhpur, Rajasthan.
           </p>
         </div>
       </footer>
