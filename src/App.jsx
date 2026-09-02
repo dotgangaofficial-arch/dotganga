@@ -851,7 +851,10 @@ function App() {
       </section>
 
       {/* Full-width Footer Conversational Form Section */}
-      <div id="contact" style={{ position: 'relative', top: '-20px' }}></div>
+      <div id="form" style={{ position: 'relative', top: '-40px' }}></div>
+      <div id="book-call" style={{ position: 'relative', top: '-40px' }}></div>
+      <div id="book" style={{ position: 'relative', top: '-40px' }}></div>
+      <div id="contact" style={{ position: 'relative', top: '-40px' }}></div>
       <section className="footer-form-section" id="book-call-form">
         <div className="footer-form-container">
           <div className="footer-form-logo-wrapper">

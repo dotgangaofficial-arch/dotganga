@@ -8,9 +8,15 @@ export default function LoadingScreen({ onFinish }) {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Snappy luxury sweep: completes in 750ms so user is never stuck
+    // If arriving via quick form link or hash, speed up load sweep to 250ms
+    const isDirectFormLink = 
+      window.location.hash.includes('form') || 
+      window.location.hash.includes('book') || 
+      window.location.hash.includes('contact') || 
+      ['/form', '/book', '/book-call', '/get-started'].includes(window.location.pathname);
+    const duration = isDirectFormLink ? 250 : 750;
+
     const startTime = Date.now();
-    const duration = 750;
 
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime;
