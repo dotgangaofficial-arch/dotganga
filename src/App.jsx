@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import avatar from './assets/images/avatar.webp';
 import logo from './assets/images/dotgangalogo.webp';
-import favicon from './assets/images/favicon.webp';
 import clapper from './assets/images/img-film-clapper.webp';
 import { FlipWord } from './FlipClock';
 import mobileMock from './assets/images/mobile-mock.webp';
@@ -858,7 +857,7 @@ function App() {
       <section className="footer-form-section" id="book-call-form">
         <div className="footer-form-container">
           <div className="footer-form-logo-wrapper">
-            <img src={favicon} alt="Favicon" className="footer-form-logo" />
+            <img src={logo} alt="DotGanga Logo" className="footer-form-logo" />
           </div>
           {submitSuccess ? (
             <div className="form-success-state">

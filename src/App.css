@@ -1697,7 +1697,8 @@
 }
 
 .footer-form-logo {
-  height: 96px;
+  height: 48px;
+  max-width: 220px;
   width: auto;
   object-fit: contain;
 }
@@ -1954,7 +1955,8 @@
   }
 
   .footer-form-logo {
-    height: 48px;
+    height: 38px;
+    max-width: 180px;
     width: auto;
   }
 
