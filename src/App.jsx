@@ -29,15 +29,15 @@ import seoImg from './assets/images/card-seo.webp';
 import seoActiveImg from './assets/images/card-seo-active.webp';
 
 // Import Video Assets for Filmstrip
-import video1 from './assets/video/video1.mp4';
-import video2 from './assets/video/video2.mp4';
-import video3 from './assets/video/video3.mp4';
-import video4 from './assets/video/video4.mp4';
-import video5 from './assets/video/video5.mp4';
-import video6 from './assets/video/video6.mp4';
-import video7 from './assets/video/video7.mp4';
-import video8 from './assets/video/video8.mp4';
-import video9 from './assets/video/video9.mp4';
+import video1 from './assets/video/video1.webm';
+import video2 from './assets/video/video2.webm';
+import video3 from './assets/video/video3.webm';
+import video4 from './assets/video/video4.webm';
+import video5 from './assets/video/video5.webm';
+import video6 from './assets/video/video6.webm';
+import video7 from './assets/video/video7.webm';
+import video8 from './assets/video/video8.webm';
+import video9 from './assets/video/video9.webm';
 
 const videosList = [
   video1, video2, video3, video4, video5, video6, video7, video8, video9
