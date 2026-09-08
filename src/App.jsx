@@ -157,7 +157,7 @@ const helpOptions = [
   { name: 'Personal Branding', img: personalImg, activeImg: personalActiveImg },
   { name: 'Business Branding', img: brandingImg, activeImg: brandingActiveImg },
   { name: 'Performance Marketing', img: performanceImg, activeImg: performanceActiveImg },
-  { name: 'Digital Marketing', img: socialImg, activeImg: socialActiveImg },
+  { name: 'Social Media Management', img: socialImg, activeImg: socialActiveImg },
   { name: 'SEO', img: seoImg, activeImg: seoActiveImg }
 ];
 
