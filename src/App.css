@@ -498,20 +498,22 @@
 
 .logo-marquee-track {
   display: flex;
-  gap: 5rem;
-  animation: scroll 30s linear infinite;
+  gap: 4rem;
+  align-items: center;
+  animation: scroll 45s linear infinite;
   min-width: max-content;
 }
 
 .logo-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 700;
-  font-size: 1.25rem;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  justify-content: center;
+  height: 58px;
+  min-width: 110px;
+  max-width: 165px;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .logo-item:hover {
@@ -524,9 +526,10 @@
 }
 
 .client-logo-svg {
-  height: 95px;
+  max-height: 54px;
+  max-width: 155px;
   width: auto;
-  max-width: 260px;
+  height: auto;
   object-fit: contain;
   opacity: 0.8;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -534,7 +537,7 @@
 
 .client-logo-svg:hover {
   opacity: 1;
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .client-logo-svg.invert-to-white {
@@ -2640,4 +2643,58 @@
     white-space: nowrap !important;
     text-align: center !important;
   }
+}
+
+/* Stage Chips Grid */
+.stage-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.stage-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.65rem 1.15rem;
+  background: #f7f7f8;
+  border: 2px solid #1a1a1e;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.stage-chip:hover {
+  background: #ffffff;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px #1a1a1e;
+}
+
+.stage-chip.active {
+  background: var(--text);
+  color: #ffffff;
+  border-color: #1a1a1e;
+  box-shadow: 3px 3px 0px var(--accent-red);
+}
+
+.stage-chip.active .stage-chip-title {
+  color: #ffffff;
+}
+
+.stage-chip.active .stage-chip-sub {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.stage-chip-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.stage-chip-sub {
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-top: 0.15rem;
 }

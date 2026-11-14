@@ -68,42 +68,32 @@ const reelsData = [
 import logo6 from './assets/Dotganga Portfolio/6.svg';
 import logo12 from './assets/Dotganga Portfolio/12.svg';
 import logo19 from './assets/Dotganga Portfolio/19.svg';
-import logo21 from './assets/Dotganga Portfolio/21.svg';
 import logo35 from './assets/Dotganga Portfolio/35.svg';
 import logoDMStudio from './assets/Dotganga Portfolio/DM Studio.svg';
-import logoMask1 from './assets/Dotganga Portfolio/Mask group-1.svg';
 import logoMask from './assets/Dotganga Portfolio/Mask group.svg';
 import logoKake from './assets/Dotganga Portfolio/Kake Di Hatti.svg';
 import logoMayank from './assets/Dotganga Portfolio/Mayank Fashion.svg';
 import logoSMRE from './assets/Dotganga Portfolio/SMRE.svg';
 import logoProRoute from './assets/Dotganga Portfolio/ProRoute Landscape Logo Background erased 1.svg';
 import logoWithName from './assets/Dotganga Portfolio/logo-with-nametransprent-1-1 1.svg';
+
+// Import New Client Logos (WebP format)
+import logoGb from './assets/images/client-logos/logo-gb.webp';
+import logoCoffea from './assets/images/client-logos/logo-coffea.webp';
+import logoSatyam from './assets/images/client-logos/logo-satyam-lingerie.webp';
+import logoKrishnaVilas from './assets/images/client-logos/logo-krishna-vilas.webp';
+import logoRehab360 from './assets/images/client-logos/logo-rehab-360.webp';
+import logoCaPoint from './assets/images/client-logos/logo-ca-point.webp';
+import logoEuroKids from './assets/images/client-logos/logo-euro-kids.webp';
+import logoSankalp from './assets/images/client-logos/logo-sankalp.webp';
+import logoGulabHalwa from './assets/images/client-logos/logo-gulab-halwa.webp';
+import logoArvind from './assets/images/client-logos/logo-arvind-handicrafts.webp';
+import logoPoshtira from './assets/images/client-logos/logo-poshtira.webp';
+import logoRajaji from './assets/images/client-logos/logo-rajaji.webp';
 // Import 12 Social Formats Showcase Items from images
 const socialGridImagesObj = import.meta.glob('./assets/images/grid-*.webp', { eager: true, import: 'default' });
 const socialGridImages = Object.values(socialGridImagesObj);
 
-
-// SVG logo shapes for the marquee items to keep things high fidelity and scalable
-const LogoIconOne = () => (
-  <svg className="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-    <path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5.5h20c0-2.31-1-4.24-2.5-5.5" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-
-const LogoIconTwo = () => (
-  <svg className="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-  </svg>
-);
-
-const LogoIconThree = () => (
-  <svg className="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-    <line x1="8" y1="21" x2="16" y2="21" />
-    <line x1="12" y1="17" x2="12" y2="21" />
-  </svg>
-);
 
 // Animated counter component using requestAnimationFrame to ensure all counters finish at the same time
 const AnimatedCounter = ({ target, start, duration = 2000 }) => {
@@ -153,12 +143,12 @@ const wordPairs = [
 ];
 
 const helpOptions = [
-  { name: 'Website', img: websiteImg, activeImg: websiteActiveImg },
-  { name: 'Personal Branding', img: personalImg, activeImg: personalActiveImg },
-  { name: 'Business Branding', img: brandingImg, activeImg: brandingActiveImg },
-  { name: 'Performance Marketing', img: performanceImg, activeImg: performanceActiveImg },
-  { name: 'Social Media Management', img: socialImg, activeImg: socialActiveImg },
-  { name: 'SEO', img: seoImg, activeImg: seoActiveImg }
+  { name: 'More Sales & Orders', img: performanceImg, activeImg: performanceActiveImg },
+  { name: 'Video Ads & Reels', img: personalImg, activeImg: personalActiveImg },
+  { name: 'Website / Store', img: websiteImg, activeImg: websiteActiveImg },
+  { name: 'Branding & Packaging', img: brandingImg, activeImg: brandingActiveImg },
+  { name: 'Social Media Growth', img: socialImg, activeImg: socialActiveImg },
+  { name: 'Search & Organic SEO', img: seoImg, activeImg: seoActiveImg }
 ];
 
 function App() {
@@ -178,35 +168,21 @@ function App() {
   const [formData, setFormData] = React.useState({
     businessName: '',
     contactPerson: '',
-    role: '',
-    designation: '',
     phoneNumber: '',
-    isWhatsappSame: true,
-    whatsappNumber: '',
-    websiteOrSocial: '',
+    helpWith: ['More Sales & Orders'],
     email: '',
-    helpWith: [],
-    projectDetails: '',
-    budget: '',
-    timeline: ''
+    websiteOrSocial: '',
+    brandStage: '',
+    projectDetails: ''
   });
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitSuccess, setSubmitSuccess] = React.useState(false);
 
-
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleRoleSelect = (roleName) => {
-    setFormData((prev) => ({
-      ...prev,
-      role: roleName,
-      designation: roleName === 'Other' ? '' : roleName
+      [name]: value
     }));
   };
 
@@ -223,17 +199,10 @@ function App() {
     });
   };
 
-  const handleBudgetSelect = (value) => {
+  const handleStageSelect = (stage) => {
     setFormData((prev) => ({
       ...prev,
-      budget: prev.budget === value ? '' : value
-    }));
-  };
-
-  const handleTimelineSelect = (value) => {
-    setFormData((prev) => ({
-      ...prev,
-      timeline: prev.timeline === value ? '' : value
+      brandStage: prev.brandStage === stage ? '' : stage
     }));
   };
 
@@ -244,35 +213,18 @@ function App() {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("access_key", "48456eb3-8e98-4189-8c0e-dace94934ae7");
-      formDataToSend.append("subject", `New Inquiry: ${formData.businessName || 'Client'} - ${formData.contactPerson || 'Lead'}`);
+      formDataToSend.append("subject", `New Brand Inquiry: ${formData.businessName || 'Brand'} - ${formData.contactPerson || 'Lead'}`);
       formDataToSend.append("from_name", "DotGanga Website Form");
       
-      // Step 1 Fields: Business & Contact Info
-      formDataToSend.append("Business Name", formData.businessName);
+      formDataToSend.append("Brand / Business Name", formData.businessName);
       formDataToSend.append("Contact Person", formData.contactPerson);
-      formDataToSend.append("Phone Number", formData.phoneNumber);
-      formDataToSend.append(
-        "WhatsApp Number", 
-        formData.isWhatsappSame 
-          ? `${formData.phoneNumber} (Same as Phone)` 
-          : (formData.whatsappNumber || formData.phoneNumber)
-      );
-      formDataToSend.append(
-        "Role / Designation", 
-        formData.role === 'Other' 
-          ? (formData.designation || 'Other') 
-          : (formData.role || 'Not Specified')
-      );
-      formDataToSend.append("Website or Social Link", formData.websiteOrSocial || 'N/A');
-
-      // Step 2 Fields: Email & Project Scope
+      formDataToSend.append("WhatsApp / Phone", formData.phoneNumber);
       formDataToSend.append("Email Address", formData.email);
-      formDataToSend.append("Services Needed", (formData.helpWith || []).join(', '));
-      formDataToSend.append("Project Brief / Details", formData.projectDetails || 'N/A');
-      formDataToSend.append("Approximate Budget", formData.budget || 'Not specified');
-      formDataToSend.append("Starting Timeline", formData.timeline || 'Not specified');
+      formDataToSend.append("Goals / Services Needed", (formData.helpWith && formData.helpWith.length > 0) ? formData.helpWith.join(', ') : 'Not specified');
+      formDataToSend.append("Instagram / Store Link", formData.websiteOrSocial || 'Not provided');
+      formDataToSend.append("Current Brand Stage", formData.brandStage || 'Not specified');
+      formDataToSend.append("Project Note / Goal", formData.projectDetails || 'None');
 
-      // Send to Web3Forms API
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formDataToSend
@@ -281,23 +233,17 @@ function App() {
       const data = await response.json();
       if (data.success) {
         setSubmitSuccess(true);
-        // Reset form fields
+        setCurrentStep(1);
         setFormData({
           businessName: '',
           contactPerson: '',
-          role: '',
-          designation: '',
           phoneNumber: '',
-          isWhatsappSame: true,
-          whatsappNumber: '',
-          websiteOrSocial: '',
+          helpWith: ['More Sales & Orders'],
           email: '',
-          helpWith: [],
-          projectDetails: '',
-          budget: '',
-          timeline: ''
+          websiteOrSocial: '',
+          brandStage: '',
+          projectDetails: ''
         });
-        setCurrentStep(1);
       } else {
         console.error("Web3Forms response:", data);
         setSubmitSuccess(true);
@@ -457,18 +403,28 @@ function App() {
   };
 
   const partnerLogos = [
+    { name: 'CA Point', icon: <img src={logoCaPoint} className="client-logo-svg" alt="CA Point" loading="lazy" decoding="async" /> },
+    { name: 'Sankalp Food Court', icon: <img src={logoSankalp} className="client-logo-svg" alt="Sankalp The Food Court" loading="lazy" decoding="async" /> },
+    { name: 'Coffea', icon: <img src={logoCoffea} className="client-logo-svg" alt="Coffea" loading="lazy" decoding="async" /> },
     { name: 'Logo 6', icon: <img src={logo6} className="client-logo-svg invert-to-white" alt="Logo 6" loading="lazy" decoding="async" /> },
+    { name: 'Satyam Lingerie', icon: <img src={logoSatyam} className="client-logo-svg" alt="Satyam Lingerie" loading="lazy" decoding="async" /> },
     { name: 'Kake Di Hatti', icon: <img src={logoKake} className="client-logo-svg" alt="Kake Di Hatti" loading="lazy" decoding="async" /> },
+    { name: 'Krishna Vilas', icon: <img src={logoKrishnaVilas} className="client-logo-svg" alt="Krishna Vilas Namkeen" loading="lazy" decoding="async" /> },
     { name: 'Logo 12', icon: <img src={logo12} className="client-logo-svg invert-to-white" alt="Logo 12" loading="lazy" decoding="async" /> },
+    { name: 'Rehab 360', icon: <img src={logoRehab360} className="client-logo-svg" alt="Rehab 360" loading="lazy" decoding="async" /> },
     { name: 'Mayank Fashion', icon: <img src={logoMayank} className="client-logo-svg" alt="Mayank Fashion" loading="lazy" decoding="async" /> },
+    { name: 'Euro Kids', icon: <img src={logoEuroKids} className="client-logo-svg" alt="Euro Kids" loading="lazy" decoding="async" /> },
     { name: 'Logo 19', icon: <img src={logo19} className="client-logo-svg invert-to-white" alt="Logo 19" loading="lazy" decoding="async" /> },
+    { name: 'Gulab Halwa', icon: <img src={logoGulabHalwa} className="client-logo-svg" alt="Gulab Halwa" loading="lazy" decoding="async" /> },
     { name: 'SMRE', icon: <img src={logoSMRE} className="client-logo-svg" alt="SMRE" loading="lazy" decoding="async" /> },
-    { name: 'Logo 21', icon: <img src={logo21} className="client-logo-svg invert-to-white" alt="Logo 21" loading="lazy" decoding="async" /> },
+    { name: 'Arvind Handicrafts', icon: <img src={logoArvind} className="client-logo-svg" alt="Arvind Handicrafts" loading="lazy" decoding="async" /> },
+    { name: 'Poshtira', icon: <img src={logoPoshtira} className="client-logo-svg" alt="Poshtira" loading="lazy" decoding="async" /> },
     { name: 'ProRoute', icon: <img src={logoProRoute} className="client-logo-svg" alt="ProRoute" loading="lazy" decoding="async" /> },
+    { name: 'Rajaji', icon: <img src={logoRajaji} className="client-logo-svg" alt="Rajaji" loading="lazy" decoding="async" /> },
     { name: 'Logo 35', icon: <img src={logo35} className="client-logo-svg invert-to-white" alt="Logo 35" loading="lazy" decoding="async" /> },
+    { name: 'GB', icon: <img src={logoGb} className="client-logo-svg" alt="GB" loading="lazy" decoding="async" /> },
     { name: 'Logo With Name', icon: <img src={logoWithName} className="client-logo-svg" alt="Logo" loading="lazy" decoding="async" /> },
     { name: 'DM Studio', icon: <img src={logoDMStudio} className="client-logo-svg invert-to-white" alt="DM Studio" loading="lazy" decoding="async" /> },
-    { name: 'Mask Group 1', icon: <img src={logoMask1} className="client-logo-svg" alt="Mask Group 1" loading="lazy" decoding="async" /> },
     { name: 'Mask Group', icon: <img src={logoMask} className="client-logo-svg" alt="Mask Group" loading="lazy" decoding="async" /> },
   ];
 
@@ -882,21 +838,22 @@ function App() {
 
               {currentStep === 1 ? (
                 <div className="form-step step-one-fade">
-                  <h2 className="form-step-title">Tell Us About Your Business</h2>
-                  <p className="form-step-subtitle">STEP 1 OF 2 — ABOUT YOU</p>
+                  <h2 className="form-step-title">Let’s Work Together</h2>
+                  <p className="form-step-subtitle">Tell us about your brand & what you want to build</p>
 
                   <div className="input-group">
-                    <label htmlFor="businessName">BUSINESS NAME *</label>
+                    <label htmlFor="businessName">BRAND / BUSINESS NAME *</label>
                     <input
                       type="text"
                       id="businessName"
                       name="businessName"
                       value={formData.businessName}
                       onChange={handleInputChange}
-                      placeholder="e.g. Acme Corporation"
+                      placeholder="e.g. Acme, Velvet Skincare"
                       required
                     />
                   </div>
+
                   <div className="input-row">
                     <div className="input-group">
                       <label htmlFor="contactPerson">YOUR NAME *</label>
@@ -906,127 +863,26 @@ function App() {
                         name="contactPerson"
                         value={formData.contactPerson}
                         onChange={handleInputChange}
-                        placeholder="e.g. Alex Morgan"
+                        placeholder="Your name"
                         required
                       />
                     </div>
                     <div className="input-group">
-                      <label htmlFor="phoneNumber">PHONE NUMBER *</label>
-                      <div className="phone-whatsapp-container">
-                        <input
-                          type="tel"
-                          id="phoneNumber"
-                          name="phoneNumber"
-                          value={formData.phoneNumber}
-                          onChange={handleInputChange}
-                          placeholder="+91 98765 43210"
-                          required
-                        />
-                        <label className="whatsapp-checkbox-label">
-                          <input
-                            type="checkbox"
-                            name="isWhatsappSame"
-                            checked={formData.isWhatsappSame}
-                            onChange={handleInputChange}
-                          />
-                          <span>This number is on WhatsApp</span>
-                        </label>
-                      </div>
-                      {!formData.isWhatsappSame && (
-                        <div className="whatsapp-conditional-input-wrapper fade-in">
-                          <label htmlFor="whatsappNumber">WhatsApp Number *</label>
-                          <input
-                            type="tel"
-                            id="whatsappNumber"
-                            name="whatsappNumber"
-                            value={formData.whatsappNumber}
-                            onChange={handleInputChange}
-                            placeholder="WhatsApp number"
-                            required={!formData.isWhatsappSame}
-                          />
-                        </div>
-                      )}
+                      <label htmlFor="phoneNumber">PHONE / WHATSAPP *</label>
+                      <input
+                        type="tel"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
+                        placeholder="+91 98765 43210"
+                        required
+                      />
                     </div>
                   </div>
 
                   <div className="input-group">
-                    <label>YOUR ROLE <span className="label-optional">(Optional)</span></label>
-                    <div className="role-chips-row">
-                      <div className="role-chips">
-                        {['Founder', 'Marketing', 'Business / Operations', 'Other'].map((r) => (
-                          <button
-                            key={r}
-                            type="button"
-                            className={`role-chip ${formData.role === r ? 'active' : ''}`}
-                            onClick={() => handleRoleSelect(r)}
-                          >
-                            {r}
-                          </button>
-                        ))}
-                      </div>
-                      {formData.role === 'Other' && (
-                        <div className="custom-role-input-wrapper fade-in">
-                          <input
-                            type="text"
-                            id="designation"
-                            name="designation"
-                            value={formData.designation}
-                            onChange={handleInputChange}
-                            placeholder="Type your role (e.g. CEO, Partner)"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="input-group">
-                    <label htmlFor="websiteOrSocial">WEBSITE / SOCIAL LINK <span className="label-optional">(Optional)</span></label>
-                    <input
-                      type="text"
-                      id="websiteOrSocial"
-                      name="websiteOrSocial"
-                      value={formData.websiteOrSocial}
-                      onChange={handleInputChange}
-                      placeholder="yourwebsite.com or @yourbrand"
-                    />
-                  </div>
-
-                  <div className="form-actions-bottom">
-                    <span className="auto-next-hint">
-                      {formData.businessName && formData.contactPerson && formData.phoneNumber.length >= 10 
-                        ? "✓ Ready to proceed." 
-                        : "Complete the required fields to continue."}
-                    </span>
-                    <button 
-                      type="button" 
-                      className="btn-form-next"
-                      disabled={!(formData.businessName && formData.contactPerson && formData.phoneNumber.length >= 10)}
-                      onClick={() => setCurrentStep(2)}
-                    >
-                      Next Step →
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="form-step step-two-fade">
-                  <h2 className="form-step-title">Additional Details</h2>
-                  <p className="form-step-subtitle">STEP 2 OF 2 — PROJECT INFO</p>
-
-                  <div className="input-group">
-                    <label htmlFor="email">EMAIL ADDRESS *</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="you@company.com"
-                      required
-                    />
-                  </div>
-
-                  <div className="input-group">
-                    <label>WHAT DO YOU NEED HELP WITH? *</label>
+                    <label>WHAT DO YOU NEED HELP WITH? * <span className="label-optional">(Select any)</span></label>
                     <div className="help-cards-grid">
                       {helpOptions.map((option) => {
                         const isSelected = (formData.helpWith || []).includes(option.name);
@@ -1049,55 +905,89 @@ function App() {
                     </div>
                   </div>
 
+                  <div className="form-actions-bottom">
+                    <span className="auto-next-hint">
+                      {formData.businessName && formData.contactPerson && formData.phoneNumber.replace(/\D/g, '').length >= 10 && (formData.helpWith || []).length > 0
+                        ? "✓ Ready to proceed" 
+                        : "Complete the fields above to continue"}
+                    </span>
+                    <button 
+                      type="button" 
+                      className="btn-form-next"
+                      disabled={!(formData.businessName && formData.contactPerson && formData.phoneNumber.replace(/\D/g, '').length >= 10 && (formData.helpWith || []).length > 0)}
+                      onClick={() => setCurrentStep(2)}
+                    >
+                      Next Step →
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="form-step step-two-fade">
+                  <h2 className="form-step-title">Project Details</h2>
+                  <p className="form-step-subtitle">A few quick details to help us prepare for our discussion</p>
+
                   <div className="input-group">
-                    <label htmlFor="projectDetails">TELL US ABOUT YOUR PROJECT</label>
+                    <label htmlFor="email">EMAIL ADDRESS *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="you@yourbrand.com"
+                      required
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label htmlFor="websiteOrSocial">WEBSITE OR INSTAGRAM <span className="label-optional">(Optional)</span></label>
+                    <input
+                      type="text"
+                      id="websiteOrSocial"
+                      name="websiteOrSocial"
+                      value={formData.websiteOrSocial}
+                      onChange={handleInputChange}
+                      placeholder="e.g. yourbrand.com or @yourbrand"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>APPROXIMATE BUDGET / STAGE <span className="label-optional">(Optional)</span></label>
+                    <div className="stage-chips-grid">
+                      {[
+                        { id: 'under50k', label: 'Under ₹50K', sub: 'Early Stage' },
+                        { id: '50k-150k', label: '₹50K – ₹1.5L', sub: 'Growth' },
+                        { id: '150k-300k', label: '₹1.5L – ₹3L', sub: 'Scale' },
+                        { id: '300k-plus', label: '₹3L+', sub: 'Established' },
+                        { id: 'discuss', label: 'Let’s Discuss', sub: 'Flexible' },
+                      ].map((stage) => {
+                        const isSelected = formData.brandStage === stage.label;
+                        return (
+                          <button
+                            key={stage.id}
+                            type="button"
+                            className={`stage-chip ${isSelected ? 'active' : ''}`}
+                            onClick={() => handleStageSelect(stage.label)}
+                          >
+                            <span className="stage-chip-title">{stage.label}</span>
+                            <span className="stage-chip-sub">{stage.sub}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label htmlFor="projectDetails">PROJECT BRIEF / GOALS <span className="label-optional">(Optional)</span></label>
                     <textarea
                       id="projectDetails"
                       name="projectDetails"
                       className="form-textarea"
                       value={formData.projectDetails}
                       onChange={handleInputChange}
-                      placeholder="Tell us briefly about your business, project, or challenge..."
-                      rows={4}
+                      placeholder="Share any specific goals, timelines, or requirements..."
+                      rows={3}
                     />
-                  </div>
-
-                  <div className="input-group">
-                    <label>APPROXIMATE BUDGET</label>
-                    <div className="budget-bar">
-                      {['Under ₹50K', '₹50K–₹1L', '₹1L–₹3L', '₹3L–₹5L', '₹5L+', 'Not Sure'].map((val) => {
-                        const isSelected = formData.budget === val;
-                        return (
-                          <button
-                            key={val}
-                            type="button"
-                            className={`budget-bar-option ${isSelected ? 'active' : ''}`}
-                            onClick={() => handleBudgetSelect(val)}
-                          >
-                            {val}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="input-group">
-                    <label>WHEN ARE YOU LOOKING TO START?</label>
-                    <div className="timeline-chips-row">
-                      {['ASAP', 'This Month', '1–3 Months', 'Exploring'].map((val) => {
-                        const isSelected = formData.timeline === val;
-                        return (
-                          <button
-                            key={val}
-                            type="button"
-                            className={`timeline-chip ${isSelected ? 'active' : ''}`}
-                            onClick={() => handleTimelineSelect(val)}
-                          >
-                            {val}
-                          </button>
-                        );
-                      })}
-                    </div>
                   </div>
 
                   <div className="form-actions-bottom">
@@ -1111,9 +1001,9 @@ function App() {
                     <button
                       type="submit"
                       className="btn-form-submit"
-                      disabled={isSubmitting || !formData.email || (formData.helpWith || []).length === 0}
+                      disabled={isSubmitting || !formData.email || !formData.email.includes('@')}
                     >
-                      {isSubmitting ? 'Submitting...' : 'Submit Details ✓'}
+                      {isSubmitting ? 'Submitting...' : 'Submit Request →'}
                     </button>
                   </div>
                 </div>
